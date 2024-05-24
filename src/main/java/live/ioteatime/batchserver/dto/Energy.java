@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TypeKwh {
+public class Energy {
 
     private String type;
     private Double kwh;
