@@ -5,7 +5,7 @@ import live.ioteatime.batchserver.dto.TypeKwh;
 import java.util.List;
 
 /*
-* InfluxDB 에서 데이터를 조회하는 DAO 입니다./
+* InfluxDB 에서 데이터를 조회하는 DAO 입니다.
 * */
 public interface KwhRepository {
 
