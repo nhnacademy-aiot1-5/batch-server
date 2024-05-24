@@ -1,7 +1,7 @@
 package live.ioteatime.batchserver.repository;
 
 import java.util.List;
-import live.ioteatime.batchserver.dto.Consumption;
+import live.ioteatime.batchserver.domain.Consumption;
 
 /**
  * {@code MonthlyConsumptionRepository} 인터페이스는 데이터베이스에 월별 전력 사용량을 저장하는 메서드를 제공합니다.
