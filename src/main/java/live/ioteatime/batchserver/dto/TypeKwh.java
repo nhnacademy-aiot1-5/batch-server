@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class TypeKwh {
 
-    private Double type;
-    private String kwh;
+    private String type;
+    private Double kwh;
 }
