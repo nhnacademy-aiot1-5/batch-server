@@ -2,6 +2,7 @@ package live.ioteatime.batchserver.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * {@code Channel} 클래스는 채널과 관련된 데이터를 나타내는 도메인 클래스입니다.<br>
@@ -11,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class Channel {
 
-    private Long channelId;
+    private Integer channelId;
 
-    private String type;
+    private String channelName;
 }
