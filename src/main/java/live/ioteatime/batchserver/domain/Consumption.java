@@ -11,9 +11,11 @@ import lombok.Getter;
 @Getter
 public class Consumption {
 
-    private Long channelId;
+    private Integer channelId;
 
     private String type;
 
     private Double kwh;
+
+    private Long bill;
 }
