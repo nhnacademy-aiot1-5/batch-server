@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class DailyConsumptionRepositoryImpl implements DailyConsumptionRepository {
 
-    private static final String INSERT_SQL = "insert into daily_electricity_consumption values (?, ?, ?, ?)";
+    private static final String INSERT_SQL = "insert into daily_electricity_consumption (time, channel_id, kwh, bill) values (?, ?, ?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
 

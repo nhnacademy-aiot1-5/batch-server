@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class ChannelRepositoryImpl implements ChannelRepository {
 
-    private static final String FIND_ALL_SQL = "select channel_id, channel_name from channels";
+    private static final String FIND_ALL_SQL = "select channel_id, place_name, channel_name from channels left join places on channels.place_id = places.place_id";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,8 +28,9 @@ public class ChannelRepositoryImpl implements ChannelRepository {
 
     private Channel mapToChannel(Map<String, Object> map) {
         Integer channelId = (Integer) map.get("channel_id");
+        String placeName = (String) map.get("place_name");
         String channelName = (String) map.get("channel_name");
 
-        return new Channel(channelId, channelName);
+        return new Channel(channelId, placeName, channelName);
     }
 }
