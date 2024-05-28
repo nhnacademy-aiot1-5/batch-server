@@ -2,6 +2,7 @@ package live.ioteatime.batchserver.util;
 
 import live.ioteatime.batchserver.domain.DemandCharge;
 import live.ioteatime.batchserver.domain.SupplyVoltage;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -16,6 +17,7 @@ class BillUtilsTest {
     int day = 30;
 
     @Test
+    @DisplayName("생성자 생성 시 예외 발생 테스트")
     void privateConstructorExceptionTest() throws NoSuchMethodException {
         Constructor<BillUtils> constructor = BillUtils.class.getDeclaredConstructor();
         constructor.setAccessible(true);
@@ -29,6 +31,7 @@ class BillUtilsTest {
 
 
     @Test
+    @DisplayName("전기요금 테스트")
     void calculateElectricityBill() {
         long electricityBill = BillUtils.getGeneralCharge(day)
                 + BillUtils.getDemandCharge(kwhUsage)
@@ -42,6 +45,7 @@ class BillUtilsTest {
     }
 
     @Test
+    @DisplayName("기본요금 테스트")
     void getGeneralCharge() {
         long generalCharge = SupplyVoltage.HIGH_VOLTAGE_A_OPTION_I.getGeneralCharge();
 
@@ -51,6 +55,7 @@ class BillUtilsTest {
     }
 
     @Test
+    @DisplayName("전력요금 테스트")
     void getDemandCharge() {
         int currentMonth = LocalDate.now().getMonthValue();
 
@@ -62,6 +67,7 @@ class BillUtilsTest {
     }
 
     @Test
+    @DisplayName("기후변화요금 테스트")
     void getClimateChangeCharge() {
         int CLIMATE_CHANGE_CHARGE = 9;
 
@@ -77,10 +83,10 @@ class BillUtilsTest {
         Long expectedCharge = Math.round(kwhUsage * FUEL_COST_ADJUSTMENT_CHARGE);
 
         assertEquals(expectedCharge, BillUtils.getFuelCostAdjustmentCharge(kwhUsage));
-
     }
 
-    @Test
+@Test
+    @DisplayName("부가가치세 테스트")
     void getVAT() {
         long electricityBill = 10000L;
 
@@ -92,6 +98,7 @@ class BillUtilsTest {
     }
 
     @Test
+    @DisplayName("전력산업기반기금 테스트")
     void getElectricityIndustryInfraFund() {
         long electricityBill = 10000L;
 
@@ -100,6 +107,5 @@ class BillUtilsTest {
         Long expectedFund = (long) Math.floor(electricityBill * ELECTRICITY_INFRA_FUND_CHARGE);
 
         assertEquals(expectedFund, BillUtils.getElectricityIndustryInfraFund(electricityBill));
-
     }
 }
