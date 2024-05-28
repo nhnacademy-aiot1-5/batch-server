@@ -22,21 +22,28 @@ public enum DemandCharge {
 
     /**
      * 현재 월에 해당하는 계절 별 요금을 반환하는 메소드입니다.
+     *
      * @param currentMonth 현재 월(1-12)을 나타나는 파라미터입니다.
      * @return 계절별 요금을 반환합니다.
      */
     public static Double getDemandCharge(int currentMonth) {
 
-        double seasonalCharge = 0.0;
-
-        if (currentMonth >= JUNE && currentMonth <= AUGUST) {
-            seasonalCharge = DemandCharge.SUMMER.getDemandCharge();
-        } else if (currentMonth >= NOVEMBER || currentMonth <= FEBRUARY) {
-            seasonalCharge = DemandCharge.WINTER.getDemandCharge();
-        } else {
-            seasonalCharge = DemandCharge.SPRING_FALL.getDemandCharge();
+        if (isSummer(currentMonth)) {
+            return DemandCharge.SUMMER.getDemandCharge();
         }
 
-        return seasonalCharge;
+        if (isWinter(currentMonth)) {
+            return DemandCharge.WINTER.getDemandCharge();
+        }
+
+        return DemandCharge.SPRING_FALL.getDemandCharge();
+    }
+
+    public static boolean isSummer(int currentMonth) {
+        return currentMonth >= JUNE && currentMonth <= AUGUST;
+    }
+
+    public static boolean isWinter(int currentMonth) {
+        return currentMonth >= NOVEMBER || currentMonth <= FEBRUARY;
     }
 }
