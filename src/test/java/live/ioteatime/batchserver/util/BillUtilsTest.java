@@ -4,13 +4,29 @@ import live.ioteatime.batchserver.domain.DemandCharge;
 import live.ioteatime.batchserver.domain.SupplyVoltage;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BillUtilsTest {
     Double kwhUsage = 100.0;
     int day = 30;
+
+    @Test
+    void privateConstructorExceptionTest() throws NoSuchMethodException {
+        Constructor<BillUtils> constructor = BillUtils.class.getDeclaredConstructor();
+        constructor.setAccessible(true);
+
+        try {
+            constructor.newInstance();
+        } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
+            assertThrows(IllegalStateException.class, () -> { throw e.getCause(); });
+        }
+    }
+
 
     @Test
     void calculateElectricityBill() {
