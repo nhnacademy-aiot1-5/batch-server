@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class DemandChargeTest {
 
     int currentMonth = LocalDate.now().getMonthValue();
+    int AUGUST = 8;
+    int DECEMBER = 12;
 
     @Test
     @DisplayName("계절 요금 메서드 테스트")
@@ -22,18 +24,34 @@ class DemandChargeTest {
     }
 
     @Test
-    @DisplayName("여름 검증 테스트")
-    void isSummer() {
-        boolean expected = DemandCharge.isSummer(currentMonth);
+    @DisplayName("여름 검증 성공 테스트")
+    void isSummerSuccessTest() {
+        boolean expected = true;
 
-        assertEquals(expected, DemandCharge.isSummer(currentMonth));
+        assertEquals(expected, DemandCharge.isSummer(AUGUST));
     }
 
     @Test
-    @DisplayName("겨울 검증 테스트")
-    void isWinter() {
-        boolean expected = DemandCharge.isWinter(currentMonth);
+    @DisplayName("여름 검증 실패 테스트")
+    void isSummerFailTest() {
+        boolean expected = false;
 
-        assertEquals(expected, DemandCharge.isWinter(currentMonth));
+        assertEquals(expected, DemandCharge.isSummer(DECEMBER));
+    }
+
+    @Test
+    @DisplayName("겨울 검증 성공 테스트")
+    void isWinter() {
+        boolean expected = true;
+
+        assertEquals(expected, DemandCharge.isWinter(DECEMBER));
+    }
+
+    @Test
+    @DisplayName("겨울 검증 실패 테스트")
+    void isSummer() {
+        boolean expected = false;
+
+        assertEquals(expected, DemandCharge.isWinter(AUGUST));
     }
 }
