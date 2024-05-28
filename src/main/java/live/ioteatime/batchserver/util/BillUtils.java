@@ -69,7 +69,7 @@ public class BillUtils {
     /**
      * 연료비조정요금을 반환하는 메서드입니다.
      * @param kwhUsage 전력 샤용량입니다.
-     * @return 전력 사용량의 3.7퍼센트인 연료비조정요금을 반환합니다. \
+     * @return 전력 사용량의 3.7퍼센트인 연료비조정요금을 반환합니다.
      */
     public static Long getFuelCostAdjustmentCharge(Double kwhUsage) {
         return (long) Math.floor(kwhUsage * FUEL_COST_ADJUSTMENT_CHARGE);
@@ -78,7 +78,7 @@ public class BillUtils {
     /**
      * 부가가치세를 반환하는 메서드입니다.
      * @param electricityBill 전기요금입니다.
-     * @return 전기요금의 10%인 부가가치세를 반환합니다. \
+     * @return 전기요금의 10%인 부가가치세를 반환합니다.
      */
     public static Long getVAT(long electricityBill) {
         return Math.round(electricityBill * VAT);
