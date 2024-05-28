@@ -29,7 +29,6 @@ class BillUtilsTest {
         }
     }
 
-
     @Test
     @DisplayName("전기요금 테스트")
     void calculateElectricityBill() {
@@ -77,6 +76,7 @@ class BillUtilsTest {
     }
 
     @Test
+    @DisplayName("연료비조정요금 테스트")
     void getFuelCostAdjustmentCharge() {
         int FUEL_COST_ADJUSTMENT_CHARGE = 5;
 
