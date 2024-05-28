@@ -15,10 +15,10 @@ class DemandChargeTest {
 
     @Test
     @DisplayName("계절 요금 메서드 테스트")
-    void getSeasonalCharge() {
-        Double seasonalCharge = DemandCharge.SPRING_FALL.getSeasonalCharge();
+    void getSeasonalChargeTest() {
+        Double seasonalCharge = DemandCharge.getSeasonalCharge(AUGUST);
 
-        Double expected = DemandCharge.getSeasonalCharge(currentMonth);
+        Double expected = DemandCharge.SUMMER.getSeasonalCharge();
 
         assertEquals(expected, seasonalCharge);
     }
@@ -41,7 +41,7 @@ class DemandChargeTest {
 
     @Test
     @DisplayName("겨울 검증 성공 테스트")
-    void isWinter() {
+    void isWinterSuccessTest() {
         boolean expected = true;
 
         assertEquals(expected, DemandCharge.isWinter(DECEMBER));
@@ -49,7 +49,7 @@ class DemandChargeTest {
 
     @Test
     @DisplayName("겨울 검증 실패 테스트")
-    void isSummer() {
+    void isWinterFailTest() {
         boolean expected = false;
 
         assertEquals(expected, DemandCharge.isWinter(AUGUST));
