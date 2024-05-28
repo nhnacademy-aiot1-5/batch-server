@@ -3,6 +3,8 @@ package live.ioteatime.batchserver.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static live.ioteatime.batchserver.domain.DemandCharge.isSummer;
+import static live.ioteatime.batchserver.domain.DemandCharge.isWinter;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DemandChargeTest {
@@ -25,7 +27,7 @@ class DemandChargeTest {
     void isSummerSuccessTest() {
         boolean expected = true;
 
-        assertEquals(expected, DemandCharge.isSummer(AUGUST));
+        assertEquals(expected, isSummer(AUGUST));
     }
 
     @Test
@@ -33,7 +35,7 @@ class DemandChargeTest {
     void isSummerFailTest() {
         boolean expected = false;
 
-        assertEquals(expected, DemandCharge.isSummer(DECEMBER));
+        assertEquals(expected, isSummer(DECEMBER));
     }
 
     @Test
@@ -41,7 +43,7 @@ class DemandChargeTest {
     void isWinterSuccessTest() {
         boolean expected = true;
 
-        assertEquals(expected, DemandCharge.isWinter(DECEMBER));
+        assertEquals(expected, isWinter(DECEMBER));
     }
 
     @Test
@@ -49,6 +51,6 @@ class DemandChargeTest {
     void isWinterFailTest() {
         boolean expected = false;
 
-        assertEquals(expected, DemandCharge.isWinter(AUGUST));
+        assertEquals(expected, isWinter(AUGUST));
     }
 }
