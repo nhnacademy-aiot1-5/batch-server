@@ -31,10 +31,11 @@ public class KwhRepositoryImpl implements KwhRepository {
     }
 
     private Energy convertToEnergy(FluxRecord fluxRecord) {
+        String place = (String) fluxRecord.getValueByKey("place");
         String type = (String) fluxRecord.getValueByKey("type");
         Double value = (Double) fluxRecord.getValue();
 
-        return new Energy(type, value);
+        return new Energy(place, type, value);
     }
 
     private String getQuery(List<String> types) {
