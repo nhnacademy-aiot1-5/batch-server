@@ -13,5 +13,7 @@ public class Channel {
 
     private Integer channelId;
 
+    private String placeName;
+
     private String channelName;
 }
