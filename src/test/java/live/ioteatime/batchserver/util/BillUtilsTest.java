@@ -29,7 +29,6 @@ class BillUtilsTest {
         }
     }
 
-
     @Test
     @DisplayName("전기요금 테스트")
     void calculateElectricityBill() {
