@@ -18,7 +18,7 @@ public enum DemandCharge {
     private static final int AUGUST = 8;
     private static final int NOVEMBER = 11;
 
-    private final double demandCharge;
+    private final double seasonalCharge;
 
     /**
      * 현재 월에 해당하는 계절 별 요금을 반환하는 메소드입니다.
@@ -26,17 +26,16 @@ public enum DemandCharge {
      * @param currentMonth 현재 월(1-12)을 나타나는 파라미터입니다.
      * @return 계절별 요금을 반환합니다.
      */
-    public static Double getDemandCharge(int currentMonth) {
-
+    public static Double getSeasonalCharge(int currentMonth) {
         if (isSummer(currentMonth)) {
-            return DemandCharge.SUMMER.getDemandCharge();
+            return DemandCharge.SUMMER.getSeasonalCharge();
         }
 
         if (isWinter(currentMonth)) {
-            return DemandCharge.WINTER.getDemandCharge();
+            return DemandCharge.WINTER.getSeasonalCharge();
         }
 
-        return DemandCharge.SPRING_FALL.getDemandCharge();
+        return DemandCharge.SPRING_FALL.getSeasonalCharge();
     }
 
     public static boolean isSummer(int currentMonth) {

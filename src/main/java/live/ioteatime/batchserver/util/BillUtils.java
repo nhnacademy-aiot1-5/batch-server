@@ -14,6 +14,10 @@ public class BillUtils {
     private static final double VAT = 0.1;
     private static final double ELECTRICITY_INDUSTRY_INFRASTRUCTURE_FUND = 0.037;
 
+    private BillUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * 전기요금을 반환하는 메서드입니다.
      * @param kwhUsage 전력사용량입니다.
@@ -48,7 +52,7 @@ public class BillUtils {
     public static Long getDemandCharge(Double kwhUsage) {
         int currentMonth = LocalDate.now().getMonthValue();
 
-        double seasonalCharge = DemandCharge.getDemandCharge(currentMonth);
+        double seasonalCharge = DemandCharge.getSeasonalCharge(currentMonth);
 
         return (long) Math.floor(seasonalCharge * kwhUsage);
     }

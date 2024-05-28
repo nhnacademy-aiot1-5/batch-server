@@ -38,7 +38,7 @@ class BillUtilsTest {
     void getDemandCharge() {
         int currentMonth = LocalDate.now().getMonthValue();
 
-        Double seasonalCharge = DemandCharge.getDemandCharge(currentMonth);
+        Double seasonalCharge = DemandCharge.getSeasonalCharge(currentMonth);
 
         Long expectedCharge = (long) Math.floor(seasonalCharge * kwhUsage);
 
