@@ -3,13 +3,10 @@ package live.ioteatime.batchserver.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DemandChargeTest {
 
-    int currentMonth = LocalDate.now().getMonthValue();
     int AUGUST = 8;
     int DECEMBER = 12;
 
