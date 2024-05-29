@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class BillUtilsTest {
     Double kwhUsage = 100.0;
-    int day = 30;
 
     @Test
     @DisplayName("생성자 생성 시 예외 발생 테스트")
@@ -31,8 +30,8 @@ class BillUtilsTest {
 
     @Test
     @DisplayName("전기요금 테스트")
-    void calculateElectricityBill() {
-        long electricityBill = BillUtils.getGeneralCharge(day)
+    void getBillingCharge() {
+        long electricityBill = BillUtils.getGeneralCharge()
                 + BillUtils.getDemandCharge(kwhUsage)
                 + BillUtils.getClimateChangeCharge(kwhUsage)
                 + BillUtils.getFuelCostAdjustmentCharge(kwhUsage);
@@ -40,7 +39,7 @@ class BillUtilsTest {
         Long expectedBill = electricityBill + BillUtils.getVAT(electricityBill)
                 + BillUtils.getElectricityIndustryInfraFund(electricityBill);
 
-        assertEquals(expectedBill, BillUtils.calculateElectricityBill(kwhUsage, day));
+        assertEquals(expectedBill, BillUtils.getBillingCharge(kwhUsage));
     }
 
     @Test
@@ -48,9 +47,11 @@ class BillUtilsTest {
     void getGeneralCharge() {
         long generalCharge = SupplyVoltage.HIGH_VOLTAGE_A_OPTION_I.getGeneralCharge();
 
-        Long expectedCharge = generalCharge * day;
+        int contractedPower = 10;
 
-        assertEquals(expectedCharge, BillUtils.getGeneralCharge(day));
+        Long expectedCharge = generalCharge * contractedPower;
+
+        assertEquals(expectedCharge, BillUtils.getGeneralCharge());
     }
 
     @Test
