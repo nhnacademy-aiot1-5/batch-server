@@ -36,28 +36,28 @@ public class BatchConfig {
     @Bean
     public Job dailyJob() {
         return jobBuilderFactory.get("daily-job")
-                                .start(dailyStep())
+                                .start(dailyStep(null))
                                 .build();
     }
 
     @Bean
-    public Step dailyStep() {
+    public Step dailyStep(DailyTasklet dailyTasklet) {
         return stepBuilderFactory.get("daily-step")
-                                 .tasklet(new DailyTasklet())
+                                 .tasklet(dailyTasklet)
                                  .build();
     }
 
     @Bean
     public Job monthlyJob() {
         return jobBuilderFactory.get("monthly-job")
-                                .start(monthlyStep())
+                                .start(monthlyStep(null))
                                 .build();
     }
 
     @Bean
-    public Step monthlyStep() {
+    public Step monthlyStep(MonthlyTasklet monthlyTasklet) {
         return stepBuilderFactory.get("monthly-step")
-                                 .tasklet(new MonthlyTasklet())
+                                 .tasklet(monthlyTasklet)
                                  .build();
     }
 
