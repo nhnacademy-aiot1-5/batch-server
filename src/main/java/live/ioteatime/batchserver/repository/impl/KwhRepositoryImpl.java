@@ -19,8 +19,22 @@ public class KwhRepositoryImpl implements KwhRepository {
     private final InfluxDBClient influxDBClient;
 
     @Override
-    public List<Energy> findAllByType(List<String> types) {
-        String query = getQuery(types);
+    public List<Energy> findDailyConsumptions(List<String> types) {
+        LocalDate date = TimeUtils.getDate();
+        String query = getQuery(types, date.minusDays(2), date, "sum", "difference()");
+
+        return executeQuery(query);
+    }
+
+    @Override
+    public List<Energy> findMonthlyConsumptions(List<String> types) {
+        LocalDate date = TimeUtils.getDate();
+        String query = getQuery(types, date.minusDays(1), date, "this_month", "yield(name: \"mean\")");
+
+        return executeQuery(query);
+    }
+
+    private List<Energy> executeQuery(String query) {
         QueryApi queryApi = influxDBClient.getQueryApi();
 
         return queryApi.query(query)
@@ -38,15 +52,16 @@ public class KwhRepositoryImpl implements KwhRepository {
         return new Energy(place, type, value);
     }
 
-    private String getQuery(List<String> types) {
-        LocalDate date = TimeUtils.getDate();
-        String start = date.minusDays(2)
-                           .toString();
-        String stop = date.toString();
+    private String getQuery(
+        List<String> types,
+        LocalDate startDate,
+        LocalDate stopDate,
+        String description,
+        String query) {
 
         StringBuilder builder = new StringBuilder();
         builder.append("from(bucket: \"ioteatime\")\n")
-               .append("  |> range(start: ").append(start).append("T15:00:00Z, stop: ").append(stop)
+               .append("  |> range(start: ").append(startDate).append("T15:00:00Z, stop: ").append(stopDate)
                .append("T15:00:00Z)\n")
                .append("  |> filter(fn: (r) => ");
 
@@ -58,9 +73,9 @@ public class KwhRepositoryImpl implements KwhRepository {
              .forEach(type -> builder.append(" or r[\"type\"] == \"").append(type).append("\""));
 
         builder.append(")\n  |> filter(fn: (r) => r[\"phase\"] == \"kwh\")\n")
-               .append("  |> filter(fn: (r) => r[\"description\"] == \"sum\")\n")
+               .append("  |> filter(fn: (r) => r[\"description\"] == \"").append(description).append("\")\n")
                .append("  |> aggregateWindow(every: 24h, fn: last, createEmpty: false, offset: 15h)\n")
-               .append("  |> difference()");
+               .append("  |> ").append(query);
 
         return builder.toString();
     }
