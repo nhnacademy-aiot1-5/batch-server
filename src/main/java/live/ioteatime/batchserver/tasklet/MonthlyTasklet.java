@@ -10,6 +10,7 @@ import live.ioteatime.batchserver.repository.ChannelRepository;
 import live.ioteatime.batchserver.repository.KwhRepository;
 import live.ioteatime.batchserver.repository.MonthlyConsumptionRepository;
 import live.ioteatime.batchserver.util.BillUtils;
+import live.ioteatime.batchserver.util.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -57,7 +58,9 @@ public class MonthlyTasklet implements Tasklet {
                                   .sum();
         Consumption totalConsumption = consumptions.get(TOTAL_KEY);
         totalConsumption.setKwh(round(totalKwh));
-        totalConsumption.setBill(BillUtils.getDemandCharge(totalKwh));
+        int day = TimeUtils.getDate()
+                           .lengthOfMonth();
+        totalConsumption.setBill(BillUtils.calculateElectricityBill(totalKwh, day));
     }
 
     private double round(double value) {
