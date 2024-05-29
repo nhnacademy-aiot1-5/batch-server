@@ -32,13 +32,13 @@ class KwhRepositoryTest {
     KwhRepositoryImpl kwhRepository;
 
     @Test
-    void findAllByType() {
+    void findDailyConsumptions() {
         given(influxDBClient.getQueryApi()).willReturn(queryApi);
         given(queryApi.query(anyString())).willReturn(List.of(createDummyFluxTable()));
 
         List<String> types = List.of("main");
 
-        List<Energy> energyList = kwhRepository.findAllByType(types);
+        List<Energy> energyList = kwhRepository.findDailyConsumptions(types);
 
         assertThat(energyList).element(0)
                               .hasFieldOrPropertyWithValue("place", "office")
