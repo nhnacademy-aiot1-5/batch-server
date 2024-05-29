@@ -11,7 +11,6 @@ import lombok.ToString;
  */
 @AllArgsConstructor
 @Getter
-@ToString // todo 테스트 후 삭제
 public class Consumption {
 
     private Integer channelId;
