@@ -1,7 +1,7 @@
 package live.ioteatime.batchserver.repository.impl;
 
 import live.ioteatime.batchserver.domain.DailyPredictedConsumption;
-import live.ioteatime.batchserver.repository.DailyPredictedElectricityConsumption;
+import live.ioteatime.batchserver.repository.DailyPredictedElectricityConsumptionRepository;
 import live.ioteatime.batchserver.setter.DailyPredictedConsumptionStatementSetter;
 import live.ioteatime.batchserver.util.BillUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class DailyPredictedElectricityConsumptionRepositoryImpl implements DailyPredictedElectricityConsumption {
+public class DailyPredictedElectricityConsumptionRepositoryRepositoryImpl implements DailyPredictedElectricityConsumptionRepository {
 
     private static final String FIND_ALL_SQL =
             "select time, kwh, channel_id, organization_id, bill " +
@@ -40,7 +40,6 @@ public class DailyPredictedElectricityConsumptionRepositoryImpl implements Daily
                 .collect(Collectors.toUnmodifiableList());
     }
 
-    @Override
     public DailyPredictedConsumption mapToBillAddedConsumption(Map<String, Object> map) {
         LocalDateTime time = (LocalDateTime) map.get("time");
         Double kwh = (Double) map.get("kwh");
