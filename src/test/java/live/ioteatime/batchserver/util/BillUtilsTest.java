@@ -31,7 +31,7 @@ class BillUtilsTest {
     @Test
     @DisplayName("전기요금 테스트")
     void getBillingCharge() {
-        long electricityBill = BillUtils.getGeneralCharge()
+    long electricityBill = BillUtils.getGeneralCharge()
                 + BillUtils.getDemandCharge(kwhUsage)
                 + BillUtils.getClimateChangeCharge(kwhUsage)
                 + BillUtils.getFuelCostAdjustmentCharge(kwhUsage);
@@ -89,7 +89,7 @@ class BillUtilsTest {
 @Test
     @DisplayName("부가가치세 테스트")
     void getVAT() {
-        long electricityBill = 10000L;
+        long electricityBill = BillUtils.getElectricityBill(kwhUsage);
 
         double VAT = 0.1;
 
@@ -101,11 +101,11 @@ class BillUtilsTest {
     @Test
     @DisplayName("전력산업기반기금 테스트")
     void getElectricityIndustryInfraFund() {
-        long electricityBill = 10000L;
+        long electricityBill = BillUtils.getElectricityBill(kwhUsage);
 
         double ELECTRICITY_INFRA_FUND_CHARGE = 0.037;
 
-        Long expectedFund = (long) Math.floor(electricityBill * ELECTRICITY_INFRA_FUND_CHARGE);
+        Long expectedFund = ((long) Math.floor(electricityBill * ELECTRICITY_INFRA_FUND_CHARGE)) / 10 * 10;
 
         assertEquals(expectedFund, BillUtils.getElectricityIndustryInfraFund(electricityBill));
     }

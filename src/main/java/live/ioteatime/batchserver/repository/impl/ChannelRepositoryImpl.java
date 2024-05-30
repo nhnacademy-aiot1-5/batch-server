@@ -1,19 +1,22 @@
 package live.ioteatime.batchserver.repository.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import live.ioteatime.batchserver.domain.Channel;
 import live.ioteatime.batchserver.repository.ChannelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Repository
 @RequiredArgsConstructor
 public class ChannelRepositoryImpl implements ChannelRepository {
 
-    private static final String FIND_ALL_SQL = "select channel_id, place_name, channel_name from channels left join places on channels.place_id = places.place_id";
+    private static final String FIND_ALL_SQL =
+            "select channel_id, place_name, channel_name "
+                    + "from channels left join places on channels.place_id = places.place_id";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -22,8 +25,8 @@ public class ChannelRepositoryImpl implements ChannelRepository {
         List<Map<String, Object>> channels = jdbcTemplate.queryForList(FIND_ALL_SQL);
 
         return channels.stream()
-                       .map(this::mapToChannel)
-                       .collect(Collectors.toUnmodifiableList());
+                .map(this::mapToChannel)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private Channel mapToChannel(Map<String, Object> map) {
