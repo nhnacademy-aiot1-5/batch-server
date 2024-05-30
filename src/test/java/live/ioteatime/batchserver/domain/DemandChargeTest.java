@@ -3,22 +3,21 @@ package live.ioteatime.batchserver.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
+import static live.ioteatime.batchserver.domain.DemandCharge.isSummer;
+import static live.ioteatime.batchserver.domain.DemandCharge.isWinter;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DemandChargeTest {
 
-    int currentMonth = LocalDate.now().getMonthValue();
     int AUGUST = 8;
     int DECEMBER = 12;
 
     @Test
     @DisplayName("계절 요금 메서드 테스트")
-    void getSeasonalCharge() {
-        Double seasonalCharge = DemandCharge.SPRING_FALL.getSeasonalCharge();
+    void getSeasonalChargeTest() {
+        Double seasonalCharge = DemandCharge.getSeasonalCharge(AUGUST);
 
-        Double expected = DemandCharge.getSeasonalCharge(currentMonth);
+        Double expected = DemandCharge.SUMMER.getSeasonalCharge();
 
         assertEquals(expected, seasonalCharge);
     }
@@ -28,7 +27,7 @@ class DemandChargeTest {
     void isSummerSuccessTest() {
         boolean expected = true;
 
-        assertEquals(expected, DemandCharge.isSummer(AUGUST));
+        assertEquals(expected, isSummer(AUGUST));
     }
 
     @Test
@@ -36,22 +35,22 @@ class DemandChargeTest {
     void isSummerFailTest() {
         boolean expected = false;
 
-        assertEquals(expected, DemandCharge.isSummer(DECEMBER));
+        assertEquals(expected, isSummer(DECEMBER));
     }
 
     @Test
     @DisplayName("겨울 검증 성공 테스트")
-    void isWinter() {
+    void isWinterSuccessTest() {
         boolean expected = true;
 
-        assertEquals(expected, DemandCharge.isWinter(DECEMBER));
+        assertEquals(expected, isWinter(DECEMBER));
     }
 
     @Test
     @DisplayName("겨울 검증 실패 테스트")
-    void isSummer() {
+    void isWinterFailTest() {
         boolean expected = false;
 
-        assertEquals(expected, DemandCharge.isWinter(AUGUST));
+        assertEquals(expected, isWinter(AUGUST));
     }
 }

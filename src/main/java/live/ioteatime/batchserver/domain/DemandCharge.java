@@ -29,14 +29,14 @@ public enum DemandCharge {
      */
     public static Double getSeasonalCharge(int currentMonth) {
         if (isSummer(currentMonth)) {
-            return DemandCharge.SUMMER.getSeasonalCharge();
+            return SUMMER.getSeasonalCharge();
         }
 
         if (isWinter(currentMonth)) {
-            return DemandCharge.WINTER.getSeasonalCharge();
+            return WINTER.getSeasonalCharge();
         }
 
-        return DemandCharge.SPRING_FALL.getSeasonalCharge();
+        return SPRING_FALL.getSeasonalCharge();
     }
 
     public static boolean isSummer(int currentMonth) {
