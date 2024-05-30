@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class ChannelRepositoryImpl implements ChannelRepository {
 
-    private static final String FIND_ALL_SQL = "select channel_id, place_name, channel_name from channels left join places on channels.place_id = places.place_id";
+    private static final String FIND_ALL_SQL
+            = "select channel_id, place_name, channel_name " +
+            "from channels left join places on channels.place_id = places.place_id";
 
     private final JdbcTemplate jdbcTemplate;
 
