@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * {@code DemandCharge} 클래스는 계절 별 전력량요금을 가진 도메인 클래스입니다. 봄 가을, 여름, 겨울 전력량 요금이 있습니다.
+ * {@code DemandCharge} 클래스는 계절 별 전력량요금을 가진 도메인 클래스입니다.<br>
+ * 봄 가을, 여름, 겨울 전력량 요금이 있습니다.
  */
 @Getter
 @AllArgsConstructor
