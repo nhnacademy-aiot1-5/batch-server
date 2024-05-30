@@ -58,9 +58,7 @@ public class MonthlyTasklet implements Tasklet {
                                   .sum();
         Consumption totalConsumption = consumptions.get(TOTAL_KEY);
         totalConsumption.setKwh(round(totalKwh));
-        int day = TimeUtils.getDate()
-                           .lengthOfMonth();
-        totalConsumption.setBill(BillUtils.calculateElectricityBill(totalKwh, day));
+        totalConsumption.setBill(BillUtils.getBillingCharge(totalKwh));
     }
 
     private double round(double value) {
