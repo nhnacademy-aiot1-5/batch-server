@@ -15,7 +15,9 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class MonthlyConsumptionRepositoryImpl implements MonthlyConsumptionRepository {
 
-    private static final String INSERT_SQL = "insert into monthly_electricity_consumption (time, channel_id, kwh, bill) values (?, ?, ?, ?)";
+    private static final String INSERT_SQL =
+            "insert into monthly_electricity_consumption (time, channel_id, kwh, bill) " +
+            "values (?, ?, ?, ?)";
 
     private final JdbcTemplate jdbcTemplate;
 

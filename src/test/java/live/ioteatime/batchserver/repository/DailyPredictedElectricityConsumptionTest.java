@@ -1,7 +1,7 @@
 package live.ioteatime.batchserver.repository;
 
 import live.ioteatime.batchserver.domain.DailyPredictedConsumption;
-import live.ioteatime.batchserver.repository.impl.DailyPredictedElectricityConsumptionRepositoryImpl;
+import live.ioteatime.batchserver.repository.impl.DailyPredictedElectricityConsumptionRepositoryRepositoryImpl;
 import live.ioteatime.batchserver.setter.DailyPredictedConsumptionStatementSetter;
 import live.ioteatime.batchserver.util.BillUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ class DailyPredictedElectricityConsumptionTest {
     JdbcTemplate jdbcTemplate;
 
     @InjectMocks
-    DailyPredictedElectricityConsumptionRepositoryImpl repository;
+    DailyPredictedElectricityConsumptionRepositoryRepositoryImpl repository;
 
     @Test
     void findAll() {
