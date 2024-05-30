@@ -46,6 +46,21 @@ class KwhRepositoryTest {
                               .hasFieldOrPropertyWithValue("kwh", 22.2);
     }
 
+    @Test
+    void findMonthlyConsumptions() {
+        given(influxDBClient.getQueryApi()).willReturn(queryApi);
+        given(queryApi.query(anyString())).willReturn(List.of(createDummyFluxTable()));
+
+        List<String> types = List.of("main");
+
+        List<Energy> energyList = kwhRepository.findMonthlyConsumptions(types);
+
+        assertThat(energyList).element(0)
+                              .hasFieldOrPropertyWithValue("place", "office")
+                              .hasFieldOrPropertyWithValue("type", "main")
+                              .hasFieldOrPropertyWithValue("kwh", 22.2);
+    }
+
     private FluxTable createDummyFluxTable() {
         FluxTable fluxTable = new FluxTable();
         FluxRecord fluxRecord = new FluxRecord(0);
