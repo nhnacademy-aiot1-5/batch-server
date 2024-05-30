@@ -20,16 +20,15 @@ import java.util.stream.Collectors;
 public class DailyPredictedElectricityConsumptionRepositoryRepositoryImpl implements DailyPredictedElectricityConsumptionRepository {
 
     private static final String FIND_ALL_SQL =
-            "select time, kwh, channel_id, organization_id, bill " +
-            "from daily_predicted_electricity_consumption";
+            "select time, kwh, channel_id, organization_id, bill "
+                    + "from daily_predicted_electricity_consumption";
 
     private static final String UPDATE_SQL =
-            "update daily_predicted_electricity_consumption " +
-            "set time = ?, kwh = ?, channel_id = ?, organization_id = ?, bill = ? " +
-            "where time = ? and channel_id = ?";
+            "update daily_predicted_electricity_consumption "
+                    + "set time = ?, kwh = ?, channel_id = ?, organization_id = ?, bill = ? "
+                    + "where time = ? and channel_id = ?";
 
     private final JdbcTemplate jdbcTemplate;
-
 
     @Override
     public List<DailyPredictedConsumption> findAll() {
