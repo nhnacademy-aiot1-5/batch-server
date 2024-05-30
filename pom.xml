@@ -20,6 +20,12 @@
 
     <properties>
         <java.version>11</java.version>
+        <sonar.exclusions>
+            **/BatchServerApplication.*,
+            **/config/*,
+            **/domain/*,
+            **/properties/*
+        </sonar.exclusions>
     </properties>
 
     <dependencies>
