@@ -3,7 +3,6 @@ package live.ioteatime.batchserver.repository.impl;
 import live.ioteatime.batchserver.domain.DailyPredictedConsumption;
 import live.ioteatime.batchserver.repository.DailyPredictedElectricityConsumptionRepository;
 import live.ioteatime.batchserver.setter.DailyPredictedConsumptionStatementSetter;
-import live.ioteatime.batchserver.util.BillUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,18 +34,17 @@ public class DailyPredictedElectricityConsumptionRepositoryRepositoryImpl implem
         List<Map<String, Object>> predictedConsumptions = jdbcTemplate.queryForList(FIND_ALL_SQL);
 
         return predictedConsumptions.stream()
-                .map(this::mapToBillAddedConsumption)
-                .collect(Collectors.toUnmodifiableList());
+                .map(this::mapToDailyPredictedConsumption)
+                .collect(Collectors.toList());
     }
 
-    public DailyPredictedConsumption mapToBillAddedConsumption(Map<String, Object> map) {
+    public DailyPredictedConsumption mapToDailyPredictedConsumption(Map<String, Object> map) {
         LocalDateTime time = (LocalDateTime) map.get("time");
         Double kwh = (Double) map.get("kwh");
         Integer channelId = (Integer) map.get("channel_id");
         Integer organizationId = (Integer) map.get("organization_id");
-        Long bill = BillUtils.getDemandCharge(kwh);
 
-        return new DailyPredictedConsumption(time, kwh, channelId, organizationId, bill);
+        return new DailyPredictedConsumption(time, kwh, channelId, organizationId, 0L);
     }
 
     @Override

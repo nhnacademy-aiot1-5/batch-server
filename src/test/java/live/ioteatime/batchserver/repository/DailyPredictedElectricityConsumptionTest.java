@@ -3,7 +3,6 @@ package live.ioteatime.batchserver.repository;
 import live.ioteatime.batchserver.domain.DailyPredictedConsumption;
 import live.ioteatime.batchserver.repository.impl.DailyPredictedElectricityConsumptionRepositoryRepositoryImpl;
 import live.ioteatime.batchserver.setter.DailyPredictedConsumptionStatementSetter;
-import live.ioteatime.batchserver.util.BillUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +34,7 @@ class DailyPredictedElectricityConsumptionTest {
         Double kwh = 100.0;
         Integer channelId = 1;
         Integer organizationId = 1;
-        Long bill = 1000L;
+        Long bill = 0L;
 
         Map<String, Object> map = Map.of(
             "time", time,
@@ -54,7 +53,7 @@ class DailyPredictedElectricityConsumptionTest {
                 .hasFieldOrPropertyWithValue("kwh", kwh)
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("organizationId", organizationId)
-                .hasFieldOrPropertyWithValue("bill", BillUtils.getDemandCharge(kwh));
+                .hasFieldOrPropertyWithValue("bill", bill);
     }
 
     @Test
@@ -63,21 +62,22 @@ class DailyPredictedElectricityConsumptionTest {
         Double kwh = 100.0;
         Integer channelId = 1;
         Integer organizationId = 1;
+        Long bill = 0L;
 
         Map<String, Object> map = Map.of(
                 "time", time,
                 "kwh", kwh,
                 "channel_id", channelId,
                 "organization_id", organizationId,
-                "bill", BillUtils.getDemandCharge(kwh)
+                "bill", bill
         );
 
-        assertThat(repository.mapToBillAddedConsumption(map))
+        assertThat(repository.mapToDailyPredictedConsumption(map))
                 .hasFieldOrPropertyWithValue("time", time)
                 .hasFieldOrPropertyWithValue("kwh", kwh)
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("organizationId", organizationId)
-                .hasFieldOrPropertyWithValue("bill", BillUtils.getDemandCharge(kwh));
+                .hasFieldOrPropertyWithValue("bill", bill);
     }
 
     @Test
@@ -88,10 +88,10 @@ class DailyPredictedElectricityConsumptionTest {
         given(jdbcTemplate.batchUpdate(any(), any(DailyPredictedConsumptionStatementSetter.class))).willReturn(statement);
 
         List<DailyPredictedConsumption> consumptions = List.of(
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-01T00:00"), 100.0, 1, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-02T00:00"), 200.0, 2, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-03T00:00"), 300.0, 3, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-04T00:00"), 400.0, 4, 1, null)
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-01T00:00"), 100.0, 1, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-02T00:00"), 200.0, 2, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-03T00:00"), 300.0, 3, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-04T00:00"), 400.0, 4, 1, 10000L)
         );
 
         Boolean result = repository.saveAll(consumptions);
@@ -109,10 +109,10 @@ class DailyPredictedElectricityConsumptionTest {
         given(jdbcTemplate.batchUpdate(any(), any(DailyPredictedConsumptionStatementSetter.class))).willReturn(statement);
 
         List<DailyPredictedConsumption> consumptions = List.of(
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-01T00:00"), 100.0, 1, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-02T00:00"), 200.0, 1, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-03T00:00"), 300.0, 1, 1, null),
-                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-04T00:00"), 400.0, 1, 1, null)
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-01T00:00"), 100.0, 1, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-02T00:00"), 200.0, 1, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-03T00:00"), 300.0, 1, 1, 10000L),
+                new DailyPredictedConsumption(LocalDateTime.parse("2024-01-04T00:00"), 400.0, 1, 1, 10000L)
         );
 
         Boolean result = repository.saveAll(consumptions);
