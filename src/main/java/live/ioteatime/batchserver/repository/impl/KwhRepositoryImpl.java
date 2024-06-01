@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import live.ioteatime.batchserver.domain.Energy;
+import live.ioteatime.batchserver.domain.Period;
 import live.ioteatime.batchserver.repository.KwhRepository;
 import live.ioteatime.batchserver.util.TimeUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class KwhRepositoryImpl implements KwhRepository {
     @Override
     public List<Energy> findDailyConsumptions(List<String> types) {
         LocalDate date = TimeUtils.getDate();
-        String query = getQuery(types, date.minusDays(2), date, "sum", "difference()");
+        String query = getQuery(types, date.minusDays(2), date, Period.DAILY);
 
         return executeQuery(query);
     }
@@ -29,7 +30,7 @@ public class KwhRepositoryImpl implements KwhRepository {
     @Override
     public List<Energy> findMonthlyConsumptions(List<String> types) {
         LocalDate date = TimeUtils.getDate();
-        String query = getQuery(types, date.minusDays(1), date, "this_month", "yield(name: \"mean\")");
+        String query = getQuery(types, date, date, Period.MONTHLY);
 
         return executeQuery(query);
     }
@@ -56,14 +57,13 @@ public class KwhRepositoryImpl implements KwhRepository {
         List<String> types,
         LocalDate startDate,
         LocalDate stopDate,
-        String description,
-        String query) {
+        Period period) {
 
         StringBuilder builder = new StringBuilder();
         builder.append("from(bucket: \"ioteatime\")\n")
-               .append("  |> range(start: ").append(startDate).append("T15:00:00Z, stop: ").append(stopDate)
-               .append("T15:00:00Z)\n")
-               .append("  |> filter(fn: (r) => ");
+               .append("  |> range(start: ").append(startDate).append(period.getStartTime())
+               .append(", stop: ").append(stopDate).append(period.getStopTime())
+               .append(")\n  |> filter(fn: (r) => ");
 
         types.stream()
              .limit(1)
@@ -73,9 +73,10 @@ public class KwhRepositoryImpl implements KwhRepository {
              .forEach(type -> builder.append(" or r[\"type\"] == \"").append(type).append("\""));
 
         builder.append(")\n  |> filter(fn: (r) => r[\"phase\"] == \"kwh\")\n")
-               .append("  |> filter(fn: (r) => r[\"description\"] == \"").append(description).append("\")\n")
-               .append("  |> aggregateWindow(every: 24h, fn: last, createEmpty: false, offset: 15h)\n")
-               .append("  |> ").append(query);
+               .append("  |> filter(fn: (r) => r[\"description\"] == \"").append(period.getDescription())
+               .append("\")\n").append("  |> aggregateWindow(every: ").append(period.getTerm())
+               .append(", fn: last, createEmpty: false, offset: 15h)\n")
+               .append("  |> ").append(period.getQuery());
 
         return builder.toString();
     }
