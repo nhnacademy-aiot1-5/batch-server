@@ -82,7 +82,7 @@ public class BatchConfig {
         jobLauncher.run(dailyJob(), refreshParams());
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 30 0 * * *")
     private void dailyPredicted() throws JobExecutionException {
         jobLauncher.run(dailyPredictedJob(), refreshParams());
     }
