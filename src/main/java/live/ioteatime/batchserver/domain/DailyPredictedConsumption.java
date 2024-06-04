@@ -20,5 +20,6 @@ public class DailyPredictedConsumption {
     @Setter
     private Integer organizationId;
 
+    @Setter
     private Long bill;
 }

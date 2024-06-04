@@ -2,6 +2,8 @@ package live.ioteatime.batchserver.config;
 
 import java.util.Date;
 import java.util.Map;
+
+import live.ioteatime.batchserver.tasklet.DailyPredictedTasklet;
 import live.ioteatime.batchserver.tasklet.DailyTasklet;
 import live.ioteatime.batchserver.tasklet.MonthlyTasklet;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,20 @@ public class BatchConfig {
     }
 
     @Bean
+    public Job dailyPredictedJob() {
+        return jobBuilderFactory.get("daily-predicted-job")
+                                .start(dailyPredictedStep(null))
+                                .build();
+    }
+
+    @Bean
+    public Step dailyPredictedStep(DailyPredictedTasklet dailyPredictedTasklet) {
+        return stepBuilderFactory.get("daily-predicted-tasklet")
+                                .tasklet(dailyPredictedTasklet)
+                                .build();
+    }
+
+    @Bean
     public Job monthlyJob() {
         return jobBuilderFactory.get("monthly-job")
                                 .start(monthlyStep(null))
@@ -64,6 +80,11 @@ public class BatchConfig {
     @Scheduled(cron = "0 0 0 * * *")
     private void daily() throws JobExecutionException {
         jobLauncher.run(dailyJob(), refreshParams());
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    private void dailyPredicted() throws JobExecutionException {
+        jobLauncher.run(dailyPredictedJob(), refreshParams());
     }
 
     @Scheduled(cron = "0 0 0 1 * *")
