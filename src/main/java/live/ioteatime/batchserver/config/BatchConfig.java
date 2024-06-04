@@ -77,7 +77,7 @@ public class BatchConfig {
                                  .build();
     }
 
-    @Scheduled(cron = "0 30 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     private void daily() throws JobExecutionException {
         jobLauncher.run(dailyJob(), refreshParams());
     }
@@ -87,7 +87,7 @@ public class BatchConfig {
         jobLauncher.run(dailyPredictedJob(), refreshParams());
     }
 
-    @Scheduled(cron = "0 30 0 1 * *")
+    @Scheduled(cron = "0 0 0 1 * *")
     private void monthly() throws JobExecutionException {
         jobLauncher.run(monthlyJob(), refreshParams());
     }
